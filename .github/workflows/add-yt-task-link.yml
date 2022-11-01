@@ -22,13 +22,25 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number
             }).then((pr) => {
-              
-              // use the branch name to make a comment  on the PR with a Binder badge
               const BRANCH_NAME = pr.data.head.ref
+              const match = s.match(/[A-Z]+-\d+/)
+              
+              if (!match) {
+                github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: `Cannot add YT Issue link 😓`
+                })
+              }
+              
+              const issueId = match[0]
+              const link = `https://t.cryptorank.io/issue/${match[0]}`
+              
               github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `branch: ${BRANCH_NAME}`
+                body: `[YT Issue](${link})`
               })
             })
