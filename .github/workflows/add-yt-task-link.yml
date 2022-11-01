@@ -22,7 +22,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
-              body: `bot link\n${pr.data.body}`
+              body: pr.data.body ? `bot link\n${pr.data.body}` : 'bot link'
             })
             
             const branchName = pr.data.head.ref
