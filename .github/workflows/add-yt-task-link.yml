@@ -16,10 +16,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const branch = ${{steps.captureStatus.outputs.response}}
+            const branch_name = ${{steps.captureStatus.outputs.response}}
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `${branch} 👋 Thanks for reporting!`
+              body: `${branch_name} 👋 Thanks for reporting!`
             })
