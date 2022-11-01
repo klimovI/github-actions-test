@@ -18,31 +18,21 @@ jobs:
               pull_number: context.issue.number
             })
             
-            github.rest.pulls.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number,
-              body: pr.data.body ? `bot link\n${pr.data.body}` : 'bot link'
-            })
-            
+            // match yt issue id (e.g. CA-1337)
             const branchName = pr.data.head.ref
             const match = branchName.match(/[A-Z]+-\d+/)
             
             if (!match) {
-              return github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: `Cannot link YouTrack Issue 😓`
-              })
+              return
             }
             
             const issueId = match[0]
-            const issueLink = `[YouTrack Issue](https://t.cryptorank.io/issue/${match[0]})`
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
+            const issueLink = `[YouTrack Issue](https://t.cryptorank.io/issue/${issueId})`
+            const prBody = pr.data.body
+            
+            github.rest.pulls.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: issueLink
+              pull_number: context.issue.number,
+              body: prBody ? `${issueLink}\n${prBody}` : issueLink
             })
