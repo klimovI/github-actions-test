@@ -1,16 +1,13 @@
-name: Pull Request Messenger
+name: Link PR YouTrack Issue
 on:
   pull_request_target:
     types: [opened]
 
 jobs:
-  comment:
-    runs-on: ubuntu-latest
+  linkYTIssue:
+    name: Link YouTrack Issue
+    runs-on: self-hosted
     steps:
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
       - name: add comment on pr
         uses: actions/github-script@v6
         with:
