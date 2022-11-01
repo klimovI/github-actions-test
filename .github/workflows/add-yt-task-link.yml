@@ -24,7 +24,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
-              body: 'zxc'
+              body: `${link}\n${pr.data.body}`
             })
             
             console.log(Object.keys(github))
@@ -45,7 +45,7 @@ jobs:
             }
             
             const issueId = match[0]
-            const link = `https://t.cryptorank.io/issue/${match[0]}`
+            const link = `[YouTrack Issue](https://t.cryptorank.io/issue/${match[0]})`
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
