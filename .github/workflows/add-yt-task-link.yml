@@ -30,7 +30,7 @@ jobs:
             const issueLink = `[YouTrack Issue](https://t.cryptorank.io/issue/${issueId})`
             const prBody = pr.data.body
             
-            github.rest.pulls.update({
+            await github.rest.pulls.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
