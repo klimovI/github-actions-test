@@ -18,6 +18,13 @@ jobs:
               pull_number: context.issue.number
             })
             
+            github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              body: 'zxc'
+            })
+            
             console.log(Object.keys(github))
             console.log(Object.keys(github.rest))
             console.log(Object.keys(github.rest.issues))
