@@ -11,7 +11,9 @@ jobs:
         uses: actions/github-script@v6	
         with:	
           github-token: ${{secrets.GITHUB_TOKEN}}	
-          script: |	
+          script: |
+            console.log(context)
+          
             const pr = await github.rest.pulls.get({	
               owner: context.repo.owner,	
               repo: context.repo.repo,	
