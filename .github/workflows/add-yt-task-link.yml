@@ -5,10 +5,9 @@ on:
 
 jobs:
   linkYTIssue:
-    name: Link YT Issue
     runs-on: ubuntu-latest
     steps:
-      - name: Find and link YT Issue url
+      - name: Link YT Issue
         uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
