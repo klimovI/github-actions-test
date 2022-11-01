@@ -18,15 +18,15 @@ jobs:
               pull_number: context.issue.number
             })
             
-            const branchName = pr.data.head.ref
-            const match = branchName.match(/[A-Z]+-\d+/)
-            
             github.rest.pulls.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
-              body: `${link}\n${pr.data.body}`
+              body: `bot link\n${pr.data.body}`
             })
+            
+            const branchName = pr.data.head.ref
+            const match = branchName.match(/[A-Z]+-\d+/)
             
             if (!match) {
               return github.rest.issues.createComment({
