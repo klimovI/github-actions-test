@@ -12,10 +12,6 @@ jobs:
         with:	
           github-token: ${{secrets.GITHUB_TOKEN}}	
           script: |
-            console.log(context.ref)
-            console.log(context.issue)
-            console.log(context.pull)
-          
             const pr = await github.rest.pulls.get({	
               owner: context.repo.owner,	
               repo: context.repo.repo,	
