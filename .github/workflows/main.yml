@@ -1,0 +1,38 @@
+name: Link PR YT Issue	
+on:	
+  pull_request_target:	
+    types: [opened]	
+
+jobs:	
+  linkYTIssue:	
+    runs-on: ubuntu-latest	
+    steps:	
+      - name: Link PR YT Issue	
+        uses: actions/github-script@v6	
+        with:	
+          github-token: ${{secrets.GITHUB_TOKEN}}	
+          script: |	
+            const pr = await github.rest.pulls.get({	
+              owner: context.repo.owner,	
+              repo: context.repo.repo,	
+              pull_number: context.issue.number	
+            })	
+            	
+            // match yt issue id (e.g. CA-1337)	
+            const branchName = pr.data.head.ref	
+            const match = branchName.match(/[A-Z]+-\d+/)	
+            	
+            if (!match) {	
+              return	
+            }	
+            	
+            const issueId = match[0]	
+            const issueLink = `[YouTrack Issue](https://t.cryptorank.io/issue/${issueId})`	
+            const prBody = pr.data.body	
+            	
+            await github.rest.pulls.update({	
+              owner: context.repo.owner,	
+              repo: context.repo.repo,	
+              pull_number: context.issue.number,	
+              body: prBody ? `${issueLink}\n${prBody}` : issueLink	
+            })
