@@ -19,6 +19,8 @@ jobs:
               pull_number: context.issue.number
             })
             
+            console.log(Object.keys(github.rest.issues))
+            
             const branchName = pr.data.head.ref
             const match = branchName.match(/[A-Z]+-\d+/)
             
