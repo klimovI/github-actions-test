@@ -19,7 +19,13 @@ jobs:
               pull_number: context.issue.number
             })
             
-            console.log(Object.keys(github.rest.issues))
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.number,
+            })
+            
+            console.log(comments)
             
             const branchName = pr.data.head.ref
             const match = branchName.match(/[A-Z]+-\d+/)
