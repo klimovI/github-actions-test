@@ -7,7 +7,7 @@ jobs:
   linkYTIssue:
     runs-on: ubuntu-latest
     steps:
-      - name: Link YT Issue
+      - name: Link PR YT Issue
         uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
