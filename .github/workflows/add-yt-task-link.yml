@@ -18,6 +18,8 @@ jobs:
               pull_number: context.issue.number
             })
             
+            console.log(pr)
+            
             github.rest.pulls.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
