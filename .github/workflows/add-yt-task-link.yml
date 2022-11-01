@@ -16,8 +16,8 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const branch_name = ${{steps.captureStatus.outputs.response}}
-            console.log(branch_name)
+            var BRANCH_NAME = pr.data.head.ref
+            console.log(BRANCH_NAME)
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
