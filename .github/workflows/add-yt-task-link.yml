@@ -21,6 +21,7 @@ jobs:
             console.log(Object.keys(github))
             console.log(Object.keys(github.rest))
             console.log(Object.keys(github.rest.issues))
+            console.log(Object.keys(github.rest.pulls))
             
             const branchName = pr.data.head.ref
             const match = branchName.match(/[A-Z]+-\d+/)
