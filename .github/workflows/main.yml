@@ -15,6 +15,8 @@ jobs:
             // match yt issue id (e.g. CA-1337)	
             const branchName = context.payload.pull_request.head.ref	
             const match = branchName.match(/[A-Z]+-\d+/)	
+            
+            console.log('pr body is', context.payload.pull_request.body)
             	
             if (!match) {	
               return	
@@ -22,7 +24,7 @@ jobs:
             	
             const issueId = match[0]	
             const issueLink = `[YouTrack Issue](https://t.cryptorank.io/issue/${issueId})`	
-            const prBody = pr.data.body	
+            const prBody = context.payload.pull_request.body	
             	
             // modify pr description
             await github.rest.pulls.update({	
