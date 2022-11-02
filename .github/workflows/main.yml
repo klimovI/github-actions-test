@@ -33,3 +33,11 @@ jobs:
               pull_number: context.payload.pull_request.number,
               body: prBody ? `${taskLink}\n${prBody}` : taskLink
             })
+            
+            // add comment on pr
+            await github.rest.issues.createComment({	
+              owner: context.repo.owner,	
+              repo: context.repo.repo,	
+              issue_number: context.issue.number,	
+              body: issueLink	
+            })
