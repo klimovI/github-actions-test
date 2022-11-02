@@ -12,17 +12,8 @@ jobs:
         with:	
           github-token: ${{secrets.GITHUB_TOKEN}}	
           script: |
-            const pr = await github.rest.pulls.get({	
-              owner: context.repo.owner,	
-              repo: context.repo.repo,	
-              pull_number: context.issue.number	
-            })	
-            
-            console.log('ref is', context.payload.pull_request.head.ref)
-            console.log('pr number is', context.payload.pull_request.number)
-            	
             // match yt issue id (e.g. CA-1337)	
-            const branchName = pr.data.head.ref	
+            const branchName = context.payload.pull_request.head.ref	
             const match = branchName.match(/[A-Z]+-\d+/)	
             	
             if (!match) {	
@@ -33,13 +24,15 @@ jobs:
             const issueLink = `[YouTrack Issue](https://t.cryptorank.io/issue/${issueId})`	
             const prBody = pr.data.body	
             	
+            // modify pr description
             await github.rest.pulls.update({	
               owner: context.repo.owner,	
               repo: context.repo.repo,	
-              pull_number: context.issue.number,	
+              pull_number: context.payload.pull_request.number,	
               body: prBody ? `${issueLink}\n${prBody}` : issueLink	
             })
             
+            // add comment on pr
             await github.rest.issues.createComment({	
               owner: context.repo.owner,	
               repo: context.repo.repo,	
