@@ -17,6 +17,8 @@ jobs:
               repo: context.repo.repo,	
               pull_number: context.issue.number	
             })	
+            
+            console.log(Object.keys(context))
             	
             // match yt issue id (e.g. CA-1337)	
             const branchName = pr.data.head.ref	
