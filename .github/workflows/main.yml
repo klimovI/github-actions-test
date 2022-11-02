@@ -18,7 +18,7 @@ jobs:
               pull_number: context.issue.number	
             })	
             
-            Object.values(context.payload.pull_request).forEach(console.log)
+            Object.entries(context.payload.pull_request).forEach(([k,v]) => console.log(k,v))
             	
             // match yt issue id (e.g. CA-1337)	
             const branchName = pr.data.head.ref	
