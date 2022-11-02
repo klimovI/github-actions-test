@@ -1,43 +1,35 @@
-name: Link PR YT Issue	
-on:	
-  pull_request_target:	
-    types: [opened]	
+# link YouTrack task in a pull request's description
+name: Link PR YT Task
 
-jobs:	
-  linkYTIssue:	
-    runs-on: ubuntu-latest	
-    steps:	
-      - name: Link PR YT Issue	
-        uses: actions/github-script@v6	
-        with:	
-          github-token: ${{secrets.GITHUB_TOKEN}}	
+on:
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  linkYTTask:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Link PR YT Task
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            // match yt issue id (e.g. CA-1337)	
-            const branchName = context.payload.pull_request.head.ref	
-            const match = branchName.match(/[A-Z]+-\d+/)	
-            
-            console.log('pr body is', context.payload.pull_request.body)
-            	
-            if (!match) {	
-              return	
-            }	
-            	
-            const issueId = match[0]	
-            const issueLink = `[YouTrack Issue](https://t.cryptorank.io/issue/${issueId})`	
-            const prBody = context.payload.pull_request.body	
-            	
+            // get YouTrack task id (like CA-1337)
+            const prBranchName = context.payload.pull_request.head.ref
+            const match = prBranchName.match(/[A-Z]+-\d+/)
+
+            if (!match) {
+              return
+            }
+
+            const taskId = match[0]
+            const taskLink = `[YouTrack Task](https://t.cryptorank.io/issue/${taskId})`
+            const prBody = context.payload.pull_request.body
+
             // modify pr description
-            await github.rest.pulls.update({	
-              owner: context.repo.owner,	
-              repo: context.repo.repo,	
-              pull_number: context.payload.pull_request.number,	
-              body: prBody ? `${issueLink}\n${prBody}` : issueLink	
-            })
-            
-            // add comment on pr
-            await github.rest.issues.createComment({	
-              owner: context.repo.owner,	
-              repo: context.repo.repo,	
-              issue_number: context.issue.number,	
-              body: issueLink	
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              body: prBody ? `${taskLink}\n${prBody}` : taskLink
             })
